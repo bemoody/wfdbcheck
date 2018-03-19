@@ -1,0 +1,34 @@
+wfdbcheck
+---------
+
+This program is designed to serve as "lint for WFDB": a tool to
+automatically find many types of errors that have been known to occur
+in WFDB-format signal and annotation files.
+
+These errors range from minor usability problems to severe violations
+of the file format.  For example, wfdbcheck will detect:
+ - missing signal metadata
+ - overflows in signal data
+ - undefined signal types
+ - problematic filenames
+ - inconsistencies between segments of a multi-segment record
+ - undefined custom annotation types
+ - out-of-range or out-of-order annotations
+ - incompatibility with 32-bit WFDB applications
+
+This program can never be comprehensive, but its goal is to help
+enforce a set of best practices when preparing a database for
+publication, on PhysioNet or elsewhere.
+
+Note that most of the errors reported by this program have actually
+occurred at least once in a real-world WFDB record, and as often as
+not it was one of *my* programs that was at fault.
+
+
+Installation
+------------
+
+This program requires the WFDB Software Package
+(https://www.physionet.org/physiotools/wfdb.shtml), version 10.6.0 or
+later.  After installing WFDB, you can compile and install this
+program by running 'make install' in the top-level directory.

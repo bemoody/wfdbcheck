@@ -1,0 +1,9 @@
+*~
+*#
+*.orig
+*.rej
+*.patch
+*.o
+
+wfdbcheck
+messages.h

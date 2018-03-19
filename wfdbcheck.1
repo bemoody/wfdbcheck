@@ -1,0 +1,57 @@
+.TH WFDBCHECK 1 "19 March 2018"
+.SH NAME
+wfdbcheck \- check for common mistakes in a WFDB record
+.SH SYNOPSIS
+\fBwfdbcheck\fR [ \fB-r\fR ] \fIrecord\fR ... [ \fB-a\fR \fIannotator\fR ... ]
+.SH DESCRIPTION
+\fBwfdbcheck\fR reads one or more WFDB records (including signal
+and/or annotation files), and checks that the records are correctly
+formatted.  It also checks for various common mistakes that can cause
+usability and interoperability problems (even though the record may be
+syntactically valid.)
+.PP
+The messages reported by \fBwfdbcheck\fR are classified into three
+severity levels: \fIerrors\fR (violations of the file format, which
+are always a mistake and are likely to break applications),
+\fIwarnings\fR (issues that are usually mistakes and likely to cause
+usability problems, although the record may be valid for some
+purposes) and \fIinformational messages\fR (situations that are
+unusual, such as a record containing no signals, but nonetheless
+completely valid.)  Each message will begin with `(EE)', `(WW)', or
+`(II)' to indicate its severity.
+.PP
+If `-' is given in place of a record name, a list of record names will
+be read from the standard input (one per line.)
+.PP
+\fIOptions\fR include:
+.TP
+\fB-a\fR \fIannotator\fR ...
+For each input record, read and check the validity of the specified
+\fIannotator\fR file(s), in addition to the signals.
+.TP
+\fB-A\fR \fIannotator\fR ...
+Read and check the validity of the specified \fIannotator\fR file(s),
+if those files exist and are readable.  If the specified files do not
+exist, they will be silently ignored.
+.TP
+\fB-r\fR \fIrecord\fR ...
+Read and check the validity of the specified \fIrecords\fR.  The
+\fB-r\fR argument is optional and is only needed following \fB-a\fR or
+\fB-A\fR.
+.TP
+\fB-v\fR
+Show a detailed description of each message, explaining what it means
+and how to correct it.
+.TP
+\fB-q\fR
+Do not display less severe (informational) messages.  Using this
+option twice (\fB-q -q\fR) will also hide warning messages; using it
+three times will also hide errors.
+.SH ENVIRONMENT
+It may be necessary to set and export the shell variable \fBWFDB\fR (see
+\fBsetwfdb\fR(1)).
+.SH SEE ALSO
+\fBwfdbcheckdb\fR(1), \fBannot\fR(5), \fBheader\fR(5),
+\fBsignal\fR(5), \fBwfdbcal\fR(5)
+.SH AUTHOR
+Benjamin Moody (benjamin@physionet.org)

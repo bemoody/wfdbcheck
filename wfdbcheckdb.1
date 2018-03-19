@@ -1,0 +1,30 @@
+.TH WFDBCHECKDB 1 "19 March 2018"
+.SH NAME
+wfdbcheckdb \- check for common mistakes in a WFDB database
+.SH SYNOPSIS
+\fBwfdbcheckdb\fR \fIdatabase\fR ...
+.SH DESCRIPTION
+\fBwfdbcheckdb\fR reads the lists of records and annotators (the
+`RECORDS' and `ANNOTATORS' files) for a WFDB database, and checks that
+each record in the database is correctly formatted.  It also checks
+for various common mistakes that can cause usability and
+interoperability problems (even though the records may be
+syntactically valid.)
+.PP
+\fIOptions\fR include:
+.TP
+\fB-v\fR
+Show a detailed description of each message, explaining what it means
+and how to correct it.
+.TP
+\fB-q\fR
+Do not display less severe (informational) messages.  Using this
+option twice (\fB-q -q\fR) will also hide warning messages; using it
+three times will also hide errors.
+.SH ENVIRONMENT
+It may be necessary to set and export the shell variable \fBWFDB\fR (see
+\fBsetwfdb\fR(1)).
+.SH SEE ALSO
+\fBwfdbcheck\fR(1)
+.SH AUTHOR
+Benjamin Moody (benjamin@physionet.org)

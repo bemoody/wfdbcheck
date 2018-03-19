@@ -1,0 +1,14 @@
+#!/bin/sed -f
+1a/* Automatically generated from wfdbcheck.c.  Do not edit. */
+1astatic const char * const message_description[] = {
+$aNULL};
+/\/\*DESCRIPTION:.*\*\/\/\*/,/\*\//!d
+s/^ *//
+s/\\/\\\\/g
+s/"/\\"/g
+s/^/\t"/
+s/.*\/\*DESCRIPTION: */"/
+s/ *\*\/\/\*//
+s/$/",/
+s/"\*\/.*/NULL,/
+s/\*\/.*/",NULL,/

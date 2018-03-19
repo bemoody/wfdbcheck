@@ -1,0 +1,71 @@
+#!/bin/sh
+#
+# wfdbcheckdb - check for common mistakes in a WFDB database
+#
+# Copyright (c) 2018 Benjamin Moody
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or (at
+# your option) any later version.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+check_dbs=
+check_args=
+
+for arg in $*
+do
+    case $arg in
+        -*)
+            check_args="$check_args $arg"
+            ;;
+        *)
+            check_dbs="$check_dbs $arg"
+            ;;
+    esac
+done
+
+if [ "x$WFDBCAL" = "x" ]
+then
+    WFDBCAL=wfdbcal
+fi
+calfile=`wfdbwhich "$WFDBCAL" 2>/dev/null`
+calpath=`echo "$calfile" | sed "s $WFDBCAL  "`
+
+warnings=0
+errors=0
+
+for db in $check_dbs
+do
+    db=`echo "x$db" | sed 's,/$,,;s,^x,,'`
+    recfile=`wfdbwhich $db/RECORDS`
+    if [ $? = 0 ]
+    then
+        dbpath=`echo "$recfile" | sed s/RECORDS//`
+        WFDB=$dbpath:$calpath
+        export WFDB
+        annotators=`wfdbcat ANNOTATORS | sed 's/[ \t].*//'`
+        wfdbcat RECORDS | wfdbcheck - $check_args -A $annotators
+        case $? in
+            0)            ;;
+            1) warnings=1 ;;
+            2) errors=1   ;;
+            *) exit $?    ;;
+        esac
+    else
+        errors=1
+    fi
+done
+
+case $errors$warnings in
+    1*) exit 2 ;;
+    01) exit 1 ;;
+    00) exit 0 ;;
+esac
