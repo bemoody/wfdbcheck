@@ -21,8 +21,7 @@ wfdbcheck.o: wfdbcheck.c messages.h
 	$(CC) $(CFLAGS) $(CPPFLAGS) $(WFDB_CFLAGS) -c wfdbcheck.c
 
 messages.h: wfdbcheck.c gen-messages
-	-sed -f gen-messages < wfdbcheck.c > messages.h.tmp
-	-sed -f gen-messages-mac < wfdbcheck.c > messages.h.tmp
+	sed -f gen-messages < wfdbcheck.c > messages.h.tmp
 	if $(CC) $(CFLAGS) $(CPPFLAGS) $(WFDB_CFLAGS) -DNO_MESSAGES \
 	   '-Dprint_msg(a,b,c,d,e,f,...)=WFDBCHECKMSG(f)' \
 	   -E wfdbcheck.c > msg0.tmp; then \

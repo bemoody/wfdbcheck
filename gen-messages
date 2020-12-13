@@ -1,12 +1,15 @@
-#!/bin/sed -f
-1a/* Automatically generated from wfdbcheck.c.  Do not edit. */
-1astatic const char * const message_description[] = {
-$aNULL};
+#!/usr/bin/sed -f
+1a\
+/* Automatically generated from wfdbcheck.c.  Do not edit. */
+1a\
+static const char * const message_description[] = {
+$a\
+NULL};
 /\/\*DESCRIPTION:.*\*\/\/\*/,/\*\//!d
 s/^ *//
 s/\\/\\\\/g
 s/"/\\"/g
-s/^/\t"/
+s/^/    "/
 s/.*\/\*DESCRIPTION: */"/
 s/ *\*\/\/\*//
 s/$/",/
