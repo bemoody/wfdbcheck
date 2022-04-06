@@ -567,26 +567,23 @@ static int format_bits(int fmt)
     case 24:  return 24;
     case 32:  return 32;
     case 8:   return 32;
-    default:  return -1;
+    default:
+        if (fmt > 100 && fmt % 100 > 0 && fmt % 100 <= 32)
+            return (fmt % 100);
+        else
+            return -1;
     }
 }
 
 /* Get the internal sample value corresponding to WFDB_INVALID_SAMPLE. */
 static WFDB_Sample format_sample_sentinel(int fmt)
 {
-    switch (fmt) {
-    case 80:  return -128;
-    case 310: return -512;
-    case 311: return -512;
-    case 212: return -2048;
-    case 16:  return -32768;
-    case 61:  return -32768;
-    case 160: return -32768;
-    case 24:  return -8388608;
-    case 32:  return -2147483648;
-    case 8:   return WFDB_INVALID_SAMPLE;
-    default:  return WFDB_INVALID_SAMPLE;
-    }
+    int bits = format_bits(fmt);
+
+    if (fmt == 8 || bits < 2)
+        return WFDB_INVALID_SAMPLE;
+
+    return -((WFDB_Sample) 1 << (bits - 2)) * 2;
 }
 
 /* Check consistency of a list of annotators. */
