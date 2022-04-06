@@ -35,7 +35,8 @@ enum {
     MSG_INTERNAL,
     MSG_ERROR,
     MSG_WARNING,
-    MSG_INFO
+    MSG_INFO,
+    N_MSG_LEVELS
 };
 
 static int calopen_failed;
@@ -51,7 +52,7 @@ static WFDB_Sample *msminv;
 static WFDB_Sample *msmaxv;
 static WFDB_Frequency msffreq;
 
-static int message_count[3];
+static int message_count[N_MSG_LEVELS];
 static int output_level = MSG_INFO;
 static int show_detail = 0;
 
