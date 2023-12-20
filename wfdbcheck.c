@@ -1408,7 +1408,7 @@ values supported by this version of the WFDB library.
         else {
             dmax = (int) ((1U << (mssiginfo[i].adcres - 1)) - 1);
             if (mssiginfo[i].adczero > INT_MAX - dmax ||
-                mssiginfo[i].adczero < INT_MIN + dmax - 1) {
+                mssiginfo[i].adczero < INT_MIN + dmax + 1) {
                 print_msg(MSG_ERROR, NULL, rec, NULL, i,
                           "integer overflow in ADC range"
                           " (zero=%d, res=%d)",
